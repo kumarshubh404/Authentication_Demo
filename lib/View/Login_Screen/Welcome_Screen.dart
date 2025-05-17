@@ -91,7 +91,7 @@ class _welcomScreen extends State<WelcomeScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Otpscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Otpscreen()));
                   },
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, // Button background color

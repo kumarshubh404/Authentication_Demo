@@ -81,46 +81,46 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(12.0)))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
                             labelText: 'Special Characters',
-                            prefixIcon: Icon(Icons.lock, color: Colors.grey,),
+                            prefixIcon: const Icon(Icons.lock, color: Colors.grey,),
                             suffixIcon: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.visibility_off, color: Colors.grey,
                                 // _obscureText ? Icons.visibility_off : Icons.visibility,
                               ),
                               onPressed: () {},
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(12.0)))),
                       ),
 
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
                             labelText: 'Repeat Password',
-                            prefixIcon: Icon(Icons.lock, color: Colors.grey,),
+                            prefixIcon: const Icon(Icons.lock, color: Colors.grey,),
                             suffixIcon: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.visibility_off, color: Colors.grey,
                                 // _obscureText ? Icons.visibility_off : Icons.visibility,
                               ),
                               onPressed: () {},
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)))),
                       ),
-                      SizedBox(height: 60),
+                      const SizedBox(height: 60),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -133,7 +133,7 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                         onPressed: () {
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                         },
-                        child: Text(
+                        child: const Text(
                           'NEXT',
                           style: TextStyle(
                               color: Colors.white,
@@ -141,8 +141,8 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(height: 30),
-                      Text(
+                      const SizedBox(height: 30),
+                      const Text(
                         'Or Continue With',
                         style: TextStyle(fontSize: 12,
                           fontWeight: FontWeight.normal,

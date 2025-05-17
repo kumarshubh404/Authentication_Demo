@@ -23,7 +23,7 @@ class _OnBoarding_Screen extends State<OnboardingScreen> {
     if (_pageIndex < 3) {
       _pageIndex++;
     } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
     }
 
     _pageController.animateToPage(
