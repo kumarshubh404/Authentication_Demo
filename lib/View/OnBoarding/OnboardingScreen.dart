@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:authentication_demo/View/Login_Screen/OtpScreen.dart';
 import 'package:authentication_demo/View/Login_Screen/Welcome_Screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../ViewModel/OnBoardViewModel.dart';
 
