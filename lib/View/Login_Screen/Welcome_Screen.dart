@@ -45,7 +45,7 @@ class _welcomScreen extends State<WelcomeScreen> {
                   child: IconButton(
                     icon: Image.asset('assets/images/Close.png'),
                     onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                     },
                     // adjust size as needed
                     splashRadius: 16, // optional

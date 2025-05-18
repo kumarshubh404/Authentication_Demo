@@ -131,7 +131,7 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                               fontStyle: FontStyle.normal),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                         },
                         child: const Text(
                           'NEXT',
