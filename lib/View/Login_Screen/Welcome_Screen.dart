@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:authentication_demo/View/Login_Screen/OtpScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../Home/Home_Screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -26,6 +26,33 @@ class _welcomScreen extends State<WelcomeScreen> {
       ),
     ],
   );
+
+  void verifyPhoneNumber(String phoneNumber) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // Auto-sign in on Android
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print('Verification failed: ${e.message}');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        // Save the verification ID to use later when submitting the OTP
+        print('Code sent. Verification ID: $verificationId');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Otpscreen(verificationId: verificationId),
+          ),
+        );
+       // Navigator.push(context, MaterialPageRoute(builder: (context) => const Otpscreen(verificationId: verificationId)));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Called when auto-retrieval times out
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +118,7 @@ class _welcomScreen extends State<WelcomeScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Otpscreen()));
+                    verifyPhoneNumber(textFieldController.text.toString());
                   },
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, // Button background color

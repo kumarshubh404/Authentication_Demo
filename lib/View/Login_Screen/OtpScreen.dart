@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../Home/Home_Screen.dart';
 
 class Otpscreen extends StatefulWidget {
-  const Otpscreen({super.key});
+  final String verificationId;
+
+  // Constructor
+  const Otpscreen({super.key, required this.verificationId});
 
   @override
   State<StatefulWidget> createState() => _Otp_Screen();
@@ -14,11 +20,29 @@ class _Otp_Screen extends State<Otpscreen> {
   final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _validateOtp() {
+    void _validateOtp() {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("OTP is valid: ${_otpController.text}")),
-      );
+      signInWithOTP(widget.verificationId, _otpController.text);
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text("OTP is valid: ${_otpController.text}")),
+      // //    signInWithOTP($widget.varificationId, '' );
+      // );
+    }
+  }
+
+  void signInWithOTP(String verificationId, String smsCode) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      print('User signed in!');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    } catch (e) {
+      print('Login failed: $e');
     }
   }
 
