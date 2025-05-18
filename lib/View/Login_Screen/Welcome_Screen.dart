@@ -35,6 +35,9 @@ class _welcomScreen extends State<WelcomeScreen> {
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
+        print('number: $phoneNumber');
+
+
         print('Verification failed: ${e.message}');
       },
       codeSent: (String verificationId, int? resendToken) {
@@ -118,7 +121,7 @@ class _welcomScreen extends State<WelcomeScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: (){
-                    verifyPhoneNumber(textFieldController.text.toString());
+                    verifyPhoneNumber('+91${textFieldController.text.toString()}');
                   },
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, // Button background color

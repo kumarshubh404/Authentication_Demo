@@ -1,12 +1,29 @@
+import 'package:flutter/foundation.dart'; // For kIsWeb
 import 'package:flutter/material.dart';
-import 'View/Splash_Screen/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'View/Splash_Screen/SplashScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  if (kIsWeb) {
+    // Web requires FirebaseOptions
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyB_Ih-WTx548Rui1JQS3HNUdLDDyCBse1A",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "authentication-demo-b3ce8",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "com.myapp.authentication_demo",
+      ),
+    );
+  } else {
+    // Android & iOS use config files
+    await Firebase.initializeApp();
+  }
+
   runApp(const MyApp());
-  
 }
 
 class MyApp extends StatelessWidget {
