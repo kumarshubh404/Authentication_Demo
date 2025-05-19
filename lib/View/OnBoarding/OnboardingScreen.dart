@@ -18,7 +18,7 @@ class _OnBoarding_Screen extends State<OnboardingScreen> {
   void handleButtonTap() {
     print("Image button tapped!");
     // Action
-    if (_pageIndex < 3) {
+    if (_pageIndex < 2) {
       _pageIndex++;
     } else {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));

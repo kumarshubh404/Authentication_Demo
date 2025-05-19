@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'package:authentication_demo/View/Login_Screen/CreateAccountScreen.dart';
 import 'package:authentication_demo/View/Login_Screen/OtpScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../ViewModel/GoogleSignInProvider.dart';
 import '../Home/Home_Screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -152,61 +154,78 @@ class _welcomScreen extends State<WelcomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      height: 57,
-                      width: 100,
-                      decoration: decoration
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox (
-                            height: 24,
-                            width: 24,
-                            child: Image.asset(
-                              'assets/images/Google.png',
-                            //  fit: BoxFit.cover,
-                            )),
+                TextButton(
+                    onPressed: () async {
+                      final provider = GoogleSignInProvider();
+                      final userCredential = await provider.signInWithGoogle();
 
-                        const Padding(
-                          padding: EdgeInsets.only(top: 6),
-                          child: Text('Google', style: TextStyle(fontFamily: "Poppins", fontSize: 12, fontWeight: FontWeight.normal), ),
-                        )
+                      if (userCredential != null) {
+                        print('Signed in: ${userCredential.user?.displayName}');
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                      } else {
+                        print('Google sign-in canceled or failed.');
+                      }
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                            height: 57, width: 100, decoration: decoration),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: Image.asset(
+                                  'assets/images/Google.png',
+                                  //  fit: BoxFit.cover,
+                                )),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 6),
+                              child: Text(
+                                'Google',
+                                style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
-                    ),
-                  ],
+                    )),
+                const SizedBox(
+                  width: 16,
                 ),
-                const SizedBox(width: 16,),
-                Stack(
+                TextButton(onPressed: (){}, child:  Stack(
                   alignment: Alignment.center,
                   children: [
-                    Container(
-                        height: 57,
-                        width: 100,
-                        decoration: decoration
-                    ),
+                    Container(height: 57, width: 100, decoration: decoration),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox (
+                        SizedBox(
                             height: 24,
                             width: 24,
                             child: Image.asset(
                               'assets/images/Facebook.png',
                               //  fit: BoxFit.cover,
                             )),
-
                         const Padding(
                           padding: EdgeInsets.only(top: 6),
-                          child: Text('Facebook', style: TextStyle(fontFamily: "Poppins", fontSize: 12, fontWeight: FontWeight.normal), ),
+                          child: Text(
+                            'Facebook',
+                            style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal),
+                          ),
                         )
                       ],
                     ),
                   ],
-                )
+                )),
               ],
             ),
             const SizedBox(height: 60,),
@@ -219,7 +238,9 @@ class _welcomScreen extends State<WelcomeScreen> {
                   fontFamily: "Poppins",
                 ),),
                 TextButton(
-                  onPressed: (){},
+                  onPressed: (){
+                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CreateAccountScreen()));
+                  },
                   child: const Text('SIGN UP', style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 18,
