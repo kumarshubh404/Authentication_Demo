@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../../ViewModel/GoogleSignInProvider.dart';
 import '../Home/Home_Screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -10,7 +11,7 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreen extends State<CreateAccountScreen> {
-  Map userData = {};
+
   var conPass = TextEditingController();
   var email = TextEditingController();
   var pass = TextEditingController();
@@ -27,6 +28,21 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
   );
 
   final _formkey = GlobalKey<FormState>();
+
+  // Sign Up
+  Future<void> _register() async {
+    if (_formkey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email.text.trim(),
+          password: pass.text.trim(),
+        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +85,8 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                     children: [
                       TextFormField(
                         controller: email,
+                        validator: (value) =>
+                        value != null && value.contains('@') ? null : 'Enter a valid email',
                         decoration: const InputDecoration(
                             labelText: 'Email',
                             prefixIcon: Icon(
@@ -86,6 +104,9 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                       ),
                       TextFormField(
                         obscureText: true,
+                        controller: pass,
+                        validator: (value) =>
+                        value != null && value.length >= 6 ? null : 'Minimum 6 characters',
                         decoration: InputDecoration(
                             labelText: 'Special Characters',
                             prefixIcon: const Icon(Icons.lock, color: Colors.grey,),
@@ -105,6 +126,9 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                       const SizedBox(height: 20),
                       TextFormField(
                         obscureText: true,
+                        controller: conPass,
+                        validator: (value) =>
+                        value != null && value.length >= 6 ? null : 'Minimum 6 characters',
                         decoration: InputDecoration(
                             labelText: 'Repeat Password',
                             prefixIcon: const Icon(Icons.lock, color: Colors.grey,),
@@ -130,9 +154,7 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                               fontSize: 16,
                               fontStyle: FontStyle.normal),
                         ),
-                        onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-                        },
+                        onPressed: _register,
                         child: const Text(
                           'NEXT',
                           style: TextStyle(
@@ -186,7 +208,16 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                           ),
                         ],
                       ),
-                      Stack(
+                      TextButton(onPressed: () async {
+                        final provider = GoogleSignInProvider();
+                        final userCredential = await provider.signInWithGoogle();
+                        if (userCredential != null) {
+                          print('Signed in: ${userCredential.user?.displayName}');
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                        } else {
+                          print('Google sign-in canceled or failed.');
+                        }
+                      }, child:  Stack(
                         alignment: Alignment.center,
                         children: [
                           Container(
@@ -214,7 +245,7 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                             ],
                           ),
                         ],
-                      ),
+                      ),),
                       Stack(
                         alignment: Alignment.center,
                         children: [

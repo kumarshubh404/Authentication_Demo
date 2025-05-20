@@ -38,8 +38,6 @@ class _welcomScreen extends State<WelcomeScreen> {
       },
       verificationFailed: (FirebaseAuthException e) {
         print('number: $phoneNumber');
-
-
         print('Verification failed: ${e.message}');
       },
       codeSent: (String verificationId, int? resendToken) {
@@ -158,7 +156,6 @@ class _welcomScreen extends State<WelcomeScreen> {
                     onPressed: () async {
                       final provider = GoogleSignInProvider();
                       final userCredential = await provider.signInWithGoogle();
-
                       if (userCredential != null) {
                         print('Signed in: ${userCredential.user?.displayName}');
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
